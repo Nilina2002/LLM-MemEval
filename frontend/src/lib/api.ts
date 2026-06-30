@@ -1,6 +1,4 @@
 // API client — all backend calls go through here.
-// Endpoint path is the single source of truth.
-
 import axios from "axios";
 import type {
   Experiment,
@@ -43,6 +41,10 @@ export async function runExperiment(id: string): Promise<{ status: string; messa
   return data;
 }
 
+export async function deleteExperiment(id: string): Promise<void> {
+  await api.delete(`/experiments/${id}`);
+}
+
 export async function getExperimentStatus(id: string): Promise<{
   status: string;
   total_turns: number;
@@ -56,6 +58,8 @@ export async function getExperimentStatus(id: string): Promise<{
 // --- Metrics ---
 
 export async function getMetrics(experimentId: string): Promise<{
+  experiment_id: string;
+  strategy_name: string;
   snapshots: MetricsSnapshot[];
   summary: Record<string, number>;
 }> {
@@ -63,15 +67,22 @@ export async function getMetrics(experimentId: string): Promise<{
   return data;
 }
 
-export async function getGraphs(experimentId: string): Promise<Record<string, PlotlyFigure>> {
+export async function getGraphs(experimentId: string): Promise<{
+  figures: Record<string, PlotlyFigure>;
+}> {
   const { data } = await api.get(`/experiments/${experimentId}/graphs`);
   return data;
 }
 
-// --- Facts ---
+// --- Facts & Recall ---
 
 export async function getFacts(experimentId: string): Promise<Fact[]> {
   const { data } = await api.get(`/experiments/${experimentId}/facts`);
+  return data;
+}
+
+export async function getRecallResults(experimentId: string): Promise<RecallResult[]> {
+  const { data } = await api.get(`/experiments/${experimentId}/recall`);
   return data;
 }
 
@@ -81,7 +92,7 @@ export async function getConversation(
   experimentId: string,
   page = 1,
   pageSize = 50
-): Promise<{ messages: Message[]; total: number }> {
+): Promise<{ messages: Message[]; total: number; page: number; page_size: number }> {
   const { data } = await api.get(`/experiments/${experimentId}/conversation`, {
     params: { page, page_size: pageSize },
   });

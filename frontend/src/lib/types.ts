@@ -100,6 +100,7 @@ export interface ExperimentCreatePayload {
       count: number;
       types: string[];
       injection_strategy: string;
+      seed?: number;
     };
     memory: {
       strategy_name: string;

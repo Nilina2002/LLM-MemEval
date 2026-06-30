@@ -5,11 +5,13 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatCost(usd: number): string {
+export function formatCost(usd: number | null | undefined): string {
+  if (usd == null) return "$0.0000";
   return usd < 0.01 ? `$${(usd * 100).toFixed(2)}¢` : `$${usd.toFixed(4)}`;
 }
 
-export function formatTokens(n: number): string {
+export function formatTokens(n: number | null | undefined): string {
+  if (n == null) return "0";
   return n >= 1_000_000
     ? `${(n / 1_000_000).toFixed(1)}M`
     : n >= 1_000

@@ -80,5 +80,11 @@ class ExperimentOrchestrator:
             raise ExperimentNotFoundError(experiment_id)
         return experiment
 
+    async def delete_experiment(self, experiment_id: str) -> None:
+        experiment = await self._repo.get_by_id(experiment_id)
+        if experiment is None:
+            raise ExperimentNotFoundError(experiment_id)
+        await self._repo.delete(experiment_id)
+
     async def list_experiments(self, limit: int = 50, offset: int = 0) -> list[Experiment]:
         return await self._repo.list_all(limit=limit, offset=offset)

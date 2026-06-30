@@ -65,6 +65,9 @@ class ExperimentService:
             total_cost_usd=experiment.total_cost_usd,
         )
 
+    async def delete(self, experiment_id: str) -> None:
+        await self._orchestrator.delete_experiment(experiment_id)
+
     async def list_all(self, limit: int = 50, offset: int = 0) -> ExperimentListResponse:
         experiments = await self._orchestrator.list_experiments(limit=limit, offset=offset)
         items = [
