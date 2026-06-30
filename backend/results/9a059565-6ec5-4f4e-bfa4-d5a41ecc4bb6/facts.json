@@ -1,0 +1,122 @@
+[
+  {
+    "fact_id": "ee999e31-3616-496d-b5c4-dafca06f53fe",
+    "text": "My name is Amara.",
+    "expected_answer": "Amara",
+    "recall_question": "What is my name?",
+    "insertion_turn": 5,
+    "fact_type": "personal",
+    "difficulty": 0.37,
+    "importance": 0.61,
+    "tags": [],
+    "alternative_answers": []
+  },
+  {
+    "fact_id": "0b38174f-b0bd-4bc9-ad68-c764f7ebf31e",
+    "text": "My native language is Tamil.",
+    "expected_answer": "Tamil",
+    "recall_question": "What is my native language?",
+    "insertion_turn": 15,
+    "fact_type": "personal",
+    "difficulty": 0.55,
+    "importance": 0.52,
+    "tags": [],
+    "alternative_answers": []
+  },
+  {
+    "fact_id": "a95d6c86-c0bb-4023-9a18-781d09b9b19f",
+    "text": "I own a Ford Focus.",
+    "expected_answer": "Ford Focus",
+    "recall_question": "What car do I own?",
+    "insertion_turn": 25,
+    "fact_type": "personal",
+    "difficulty": 0.5,
+    "importance": 0.51,
+    "tags": [],
+    "alternative_answers": []
+  },
+  {
+    "fact_id": "a500a744-ac7a-46e4-8a8a-78785fc34c59",
+    "text": "My pet is called Max.",
+    "expected_answer": "Max",
+    "recall_question": "What is my pet's name?",
+    "insertion_turn": 35,
+    "fact_type": "personal",
+    "difficulty": 0.69,
+    "importance": 0.5,
+    "tags": [],
+    "alternative_answers": []
+  },
+  {
+    "fact_id": "292e6d8b-a967-448e-91d3-c22c62e643c7",
+    "text": "I work as a product manager.",
+    "expected_answer": "product manager",
+    "recall_question": "What do I work as?",
+    "insertion_turn": 45,
+    "fact_type": "personal",
+    "difficulty": 0.37,
+    "importance": 0.61,
+    "tags": [],
+    "alternative_answers": []
+  },
+  {
+    "fact_id": "953fb4b8-db24-4ba0-800c-928df58bb41e",
+    "text": "I am 24 years old.",
+    "expected_answer": "24",
+    "recall_question": "How old am I?",
+    "insertion_turn": 55,
+    "fact_type": "personal",
+    "difficulty": 0.43,
+    "importance": 0.68,
+    "tags": [],
+    "alternative_answers": []
+  },
+  {
+    "fact_id": "06fd6282-203f-46c3-8681-f8e0c09b6c0e",
+    "text": "I study Mathematics.",
+    "expected_answer": "Mathematics",
+    "recall_question": "What do I study?",
+    "insertion_turn": 65,
+    "fact_type": "personal",
+    "difficulty": 0.58,
+    "importance": 0.68,
+    "tags": [],
+    "alternative_answers": []
+  },
+  {
+    "fact_id": "391a0e21-68c6-49e7-ac24-fdabd382936d",
+    "text": "My favorite food is ramen.",
+    "expected_answer": "ramen",
+    "recall_question": "What is my favorite food?",
+    "insertion_turn": 75,
+    "fact_type": "personal",
+    "difficulty": 0.6,
+    "importance": 0.85,
+    "tags": [],
+    "alternative_answers": []
+  },
+  {
+    "fact_id": "ecaf0ec4-181b-4874-8aa5-8ceb5ae540ec",
+    "text": "My favorite color is coral.",
+    "expected_answer": "coral",
+    "recall_question": "What is my favorite color?",
+    "insertion_turn": 85,
+    "fact_type": "personal",
+    "difficulty": 0.43,
+    "importance": 0.99,
+    "tags": [],
+    "alternative_answers": []
+  },
+  {
+    "fact_id": "60deed50-cfe8-4491-b667-bb7ec13ed60b",
+    "text": "My lucky number is 7.",
+    "expected_answer": "7",
+    "recall_question": "What is my lucky number?",
+    "insertion_turn": 95,
+    "fact_type": "personal",
+    "difficulty": 0.27,
+    "importance": 0.68,
+    "tags": [],
+    "alternative_answers": []
+  }
+]

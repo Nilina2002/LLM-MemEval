@@ -116,6 +116,54 @@ make dev          # start backend + frontend together
 
 ---
 
+## Running with Ollama (local, free, no API key)
+
+Ollama lets you run open-source models on your own machine at zero cost.
+
+### 1. Install Ollama
+
+Download from [ollama.com](https://ollama.com) and install it.
+
+### 2. Pull a model
+
+```bash
+ollama pull llama3.2        # recommended — fast, good quality
+# or
+ollama pull mistral
+ollama pull phi3
+```
+
+### 3. Verify Ollama is running
+
+```bash
+ollama list                 # shows downloaded models
+curl http://localhost:11434/api/tags   # should return JSON
+```
+
+Ollama runs as a background service on `http://localhost:11434` by default. No `.env` changes needed.
+
+### 4. Create an experiment using Ollama
+
+In the app (`http://localhost:3000`):
+
+1. Click **+ New Experiment**
+2. Under **LLM Configuration**, set **Provider** to `ollama`
+3. Set **Model** to the model you pulled (e.g. `llama3.2`)
+4. Leave **Ollama Base URL** blank to use the default (`http://localhost:11434`), or enter a custom URL if Ollama is running on a different machine
+5. Fill in the rest and click **Create Experiment**
+
+> Ollama experiments have **zero API cost** — the cost field will always show `$0.00`.
+
+### Changing the default Ollama URL
+
+If Ollama runs on a different host or port, set this in `backend/.env`:
+
+```env
+OLLAMA_BASE_URL=http://192.168.1.10:11434
+```
+
+---
+
 ## Docker (alternative)
 
 If you prefer Docker, run everything — backend, frontend, and ChromaDB — with:
@@ -166,3 +214,12 @@ This is normal — it downloads model weights on first use. Let it complete.
 
 **ChromaDB errors on startup**
 ChromaDB is only required for the RAG memory strategy. The default strategies (`no_memory`, `sliding_window`) work without it.
+
+**Ollama experiment fails with "connection refused"**
+Ollama isn't running. Start it with `ollama serve` (or it may already run as a system service after install — check with `ollama list`).
+
+**Ollama experiment fails with "model not found"**
+The model name in the experiment doesn't match what you pulled. Run `ollama list` to see exact model names, then use that name in the experiment form (e.g. `llama3.2` not `llama3`).
+
+**Ollama responses are slow**
+Normal — local models run on CPU by default. Use a smaller model (`phi3`, `gemma2:2b`) or ensure Ollama is using your GPU (see Ollama docs for GPU setup).

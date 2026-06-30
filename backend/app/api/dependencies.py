@@ -6,7 +6,7 @@ from __future__ import annotations
 from functools import cache
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.database.session import AsyncSessionLocal
+from app.database.session import AsyncSessionLocal, get_db_session
 from app.repositories.experiment_repository import SQLExperimentRepository
 from app.repositories.fact_repository import SQLFactRepositoryWithExperiment
 from app.repositories.message_repository import SQLMessageRepository
@@ -26,7 +26,7 @@ from app.core.config.settings import settings
 
 async def get_db() -> AsyncSession:
     """Yield a database session scoped to the HTTP request."""
-    async with AsyncSessionLocal() as session:
+    async with get_db_session() as session:
         yield session
 
 
@@ -41,28 +41,21 @@ def get_default_llm_provider():
     return create_llm_provider(default_config)
 
 
-async def get_experiment_service(
-    db: AsyncSession = None,
-) -> ExperimentService:
+async def get_experiment_service():
     """
     Build the full dependency graph for experiment operations.
-
-    The pipeline's LLM provider is instantiated lazily per-experiment based on
-    the experiment's own LLMConfig. Here we wire a placeholder that the
-    orchestrator overrides at run time.
+    Uses get_db_session so the session commits on success and rolls back on error.
     """
-    async with AsyncSessionLocal() as session:
+    async with get_db_session() as session:
         experiment_repo = SQLExperimentRepository(session)
         metrics_engine = MetricsEngine()
         exp_logger = ExperimentLogger()
         viz_engine = VisualizationEngine()
 
-        # The LLM provider used here is the default; per-experiment runs use
-        # config-specific providers created inside ExperimentOrchestrator.run_experiment()
         try:
             llm_provider = get_default_llm_provider()
         except Exception:
-            llm_provider = None   # No API key configured — will fail gracefully at run time
+            llm_provider = None
 
         pipeline = ExperimentPipeline(
             llm_provider=llm_provider,
@@ -79,7 +72,7 @@ async def get_experiment_service(
             strategy_registry=registry,
         )
 
-        return ExperimentService(orchestrator=orchestrator)
+        yield ExperimentService(orchestrator=orchestrator)
 
 
 class DependencyContainer:

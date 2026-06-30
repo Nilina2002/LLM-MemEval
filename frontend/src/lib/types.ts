@@ -90,6 +90,7 @@ export interface ExperimentCreatePayload {
       model: string;
       temperature: number;
       max_tokens: number;
+      base_url?: string;
     };
     conversation: {
       domain: string;

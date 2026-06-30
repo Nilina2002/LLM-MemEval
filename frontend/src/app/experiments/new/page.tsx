@@ -10,6 +10,7 @@ type FormState = {
   description: string;
   llm_provider: string;
   llm_model: string;
+  llm_base_url: string;
   llm_temperature: number;
   llm_max_tokens: number;
   conv_domain: string;
@@ -29,6 +30,7 @@ const DEFAULTS: FormState = {
   description: "",
   llm_provider: "openai",
   llm_model: "gpt-4o-mini",
+  llm_base_url: "",
   llm_temperature: 0.7,
   llm_max_tokens: 512,
   conv_domain: "casual",
@@ -54,7 +56,7 @@ const DEFAULT_MODELS: Record<string, string> = {
   gemini: "gemini-1.5-flash",
   groq: "llama3-8b-8192",
   openrouter: "openai/gpt-4o-mini",
-  ollama: "llama3",
+  ollama: "llama3.2",
 };
 
 export default function NewExperimentPage() {
@@ -100,6 +102,7 @@ export default function NewExperimentPage() {
           model: form.llm_model,
           temperature: form.llm_temperature,
           max_tokens: form.llm_max_tokens,
+          ...(form.llm_base_url.trim() && { base_url: form.llm_base_url.trim() }),
         },
         conversation: { domain: form.conv_domain, total_turns: form.conv_total_turns, seed: form.conv_seed },
         facts: {
@@ -158,13 +161,28 @@ export default function NewExperimentPage() {
           <div className="grid grid-cols-2 gap-4">
             <Field label="Provider">
               <select className={inp} value={form.llm_provider}
-                onChange={(e) => { set("llm_provider", e.target.value); set("llm_model", DEFAULT_MODELS[e.target.value] ?? ""); }}>
+                onChange={(e) => {
+                  const p = e.target.value;
+                  set("llm_provider", p);
+                  set("llm_model", DEFAULT_MODELS[p] ?? "");
+                  if (p !== "ollama") set("llm_base_url", "");
+                }}>
                 {PROVIDERS.map((p) => <option key={p} value={p}>{p}</option>)}
               </select>
             </Field>
             <Field label="Model">
               <input className={inp} value={form.llm_model} onChange={(e) => set("llm_model", e.target.value)} />
             </Field>
+            {form.llm_provider === "ollama" && (
+              <Field label="Ollama Base URL">
+                <input
+                  className={inp}
+                  placeholder="http://localhost:11434"
+                  value={form.llm_base_url}
+                  onChange={(e) => set("llm_base_url", e.target.value)}
+                />
+              </Field>
+            )}
             <Field label={`Temperature: ${form.llm_temperature}`}>
               <input type="range" min="0" max="2" step="0.1" className="w-full accent-primary"
                 value={form.llm_temperature} onChange={(e) => set("llm_temperature", parseFloat(e.target.value))} />

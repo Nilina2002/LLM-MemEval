@@ -82,6 +82,14 @@ class ExperimentPipeline:
         """
         config = ExperimentConfig.model_validate(experiment.config)
 
+        # ── LLM provider — created from the experiment's own config ──────────
+        from app.infrastructure.llm.factory import create_llm_provider
+        llm = create_llm_provider(config.llm)
+        logger.info(
+            "Experiment %s: using LLM provider '%s' model '%s'",
+            experiment.id[:8], config.llm.provider, config.llm.model,
+        )
+
         # ── Repositories ──────────────────────────────────────────────────────
         fact_repo = SQLFactRepositoryWithExperiment(self._db, experiment.id)
         msg_repo = SQLMessageRepository(self._db)
@@ -104,7 +112,7 @@ class ExperimentPipeline:
 
         # ── Build recall engine ───────────────────────────────────────────────
         recall_engine = RecallTestingEngine(
-            llm_provider=self._llm,
+            llm_provider=llm,
             scoring_pipeline=scoring_pipeline,
             recall_intervals=config.recall.intervals,
         )
@@ -151,7 +159,7 @@ class ExperimentPipeline:
 
             # Call LLM
             try:
-                llm_response = await self._llm.complete(
+                llm_response = await llm.complete(
                     system_prompt=system_prompt,
                     messages=history + [{"role": "user", "content": user_content}],
                     temperature=config.llm.temperature,
