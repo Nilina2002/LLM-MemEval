@@ -66,20 +66,24 @@ async def get_experiment(
 async def run_experiment(
     experiment_id: str,
     background_tasks: BackgroundTasks,
-    service: ExperimentService = Depends(get_experiment_service),
 ) -> RunExperimentResponse:
     """Start experiment execution as a background task."""
-    try:
-        background_tasks.add_task(service.run, experiment_id)
-        return RunExperimentResponse(
-            experiment_id=experiment_id,
-            status="running",
-            message="Experiment queued for execution.",
-        )
-    except ExperimentNotFoundError as exc:
-        raise HTTPException(status_code=404, detail=str(exc))
-    except ExperimentAlreadyRunningError as exc:
-        raise HTTPException(status_code=409, detail=str(exc))
+    background_tasks.add_task(_run_experiment_task, experiment_id)
+    return RunExperimentResponse(
+        experiment_id=experiment_id,
+        status="running",
+        message="Experiment queued for execution.",
+    )
+
+
+async def _run_experiment_task(experiment_id: str) -> None:
+    """Background task — builds its own session so it doesn't share with the HTTP request."""
+    from app.api.dependencies import get_experiment_service
+    async for service in get_experiment_service():
+        try:
+            await service._orchestrator.run_experiment(experiment_id)
+        except Exception as exc:
+            logger.exception("Background run failed for %s: %s", experiment_id, exc)
 
 
 @router.get("/{experiment_id}/facts")
