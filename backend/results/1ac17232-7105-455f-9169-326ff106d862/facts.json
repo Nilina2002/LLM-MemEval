@@ -1,0 +1,14 @@
+[
+  {
+    "fact_id": "5c8b90e8-be74-411a-a09f-c802d311b391",
+    "text": "My name is Amara.",
+    "expected_answer": "Amara",
+    "recall_question": "What is my name?",
+    "insertion_turn": 25,
+    "fact_type": "personal",
+    "difficulty": 0.37,
+    "importance": 0.61,
+    "tags": [],
+    "alternative_answers": []
+  }
+]

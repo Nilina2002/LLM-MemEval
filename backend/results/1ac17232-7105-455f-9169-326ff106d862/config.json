@@ -1,0 +1,56 @@
+{
+  "name": "sliding-window-casual-100t-v1.1",
+  "description": "Nilina - Test 2 - 100 turns",
+  "llm": {
+    "provider": "llamaindex",
+    "model": "llama3",
+    "temperature": 0.7,
+    "max_tokens": 512,
+    "seed": null,
+    "api_key_env_var": null,
+    "base_url": "http://localhost:11434"
+  },
+  "conversation": {
+    "domain": "casual",
+    "total_turns": 100,
+    "seed": 42,
+    "allow_topic_drift": true
+  },
+  "facts": {
+    "count": 1,
+    "types": [
+      "personal"
+    ],
+    "injection_strategy": "early",
+    "difficulty_range": [
+      0.2,
+      0.8
+    ],
+    "seed": 42
+  },
+  "memory": {
+    "strategy_name": "sliding_window",
+    "strategy_params": {
+      "window_size": 20
+    }
+  },
+  "recall": {
+    "intervals": [
+      10,
+      50,
+      100
+    ],
+    "scoring_methods": [
+      "fuzzy",
+      "embedding"
+    ],
+    "scoring_threshold": 0.8
+  },
+  "output": {
+    "output_dir": "results",
+    "export_json": true,
+    "export_csv": false,
+    "save_prompts": true,
+    "save_raw_responses": false
+  }
+}

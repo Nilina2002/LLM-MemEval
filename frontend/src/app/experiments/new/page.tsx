@@ -47,7 +47,7 @@ const DEFAULTS: FormState = {
 
 const FACT_TYPES = ["personal", "technical", "temporal", "spatial", "numerical"];
 const SCORING_METHODS = ["exact", "fuzzy", "embedding"];
-const PROVIDERS = ["openai", "claude", "gemini", "groq", "openrouter", "ollama"];
+const PROVIDERS = ["openai", "claude", "gemini", "groq", "openrouter", "ollama", "llamaindex"];
 const DOMAINS = ["casual", "programming", "education", "travel", "shopping", "mixed"];
 const INJECTION_STRATEGIES = ["uniform", "early", "late", "random"];
 const DEFAULT_MODELS: Record<string, string> = {
@@ -57,7 +57,9 @@ const DEFAULT_MODELS: Record<string, string> = {
   groq: "llama3-8b-8192",
   openrouter: "openai/gpt-4o-mini",
   ollama: "llama3.2",
+  llamaindex: "llama3",
 };
+const LOCAL_PROVIDERS = ["ollama", "llamaindex"];
 
 export default function NewExperimentPage() {
   const router = useRouter();
@@ -122,8 +124,18 @@ export default function NewExperimentPage() {
       const exp = await createExperiment(payload);
       router.push(`/experiments/${exp.id}`);
     } catch (e: unknown) {
-      const detail = (e as { response?: { data?: { detail?: string } } })?.response?.data?.detail;
-      setError(detail ?? (e instanceof Error ? e.message : "Failed to create experiment."));
+      const raw = (e as { response?: { data?: { detail?: unknown } } })?.response?.data?.detail;
+      let msg: string;
+      if (Array.isArray(raw)) {
+        msg = raw.map((err: { msg?: string; loc?: unknown[] }) =>
+          `${(err.loc ?? []).slice(1).join(".")} — ${err.msg ?? JSON.stringify(err)}`
+        ).join("\n");
+      } else if (typeof raw === "string") {
+        msg = raw;
+      } else {
+        msg = e instanceof Error ? e.message : "Failed to create experiment.";
+      }
+      setError(msg);
       setSubmitting(false);
     }
   }
@@ -138,7 +150,7 @@ export default function NewExperimentPage() {
       </div>
 
       {error && (
-        <div className="rounded-md bg-destructive/15 border border-destructive/30 px-4 py-3 text-sm text-red-400">
+        <div className="rounded-md bg-destructive/15 border border-destructive/30 px-4 py-3 text-sm text-red-400 whitespace-pre-line">
           {error}
         </div>
       )}
@@ -165,7 +177,7 @@ export default function NewExperimentPage() {
                   const p = e.target.value;
                   set("llm_provider", p);
                   set("llm_model", DEFAULT_MODELS[p] ?? "");
-                  if (p !== "ollama") set("llm_base_url", "");
+                  if (!LOCAL_PROVIDERS.includes(p)) set("llm_base_url", "");
                 }}>
                 {PROVIDERS.map((p) => <option key={p} value={p}>{p}</option>)}
               </select>
@@ -173,7 +185,7 @@ export default function NewExperimentPage() {
             <Field label="Model">
               <input className={inp} value={form.llm_model} onChange={(e) => set("llm_model", e.target.value)} />
             </Field>
-            {form.llm_provider === "ollama" && (
+            {LOCAL_PROVIDERS.includes(form.llm_provider) && (
               <Field label="Ollama Base URL">
                 <input
                   className={inp}

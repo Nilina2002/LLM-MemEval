@@ -54,10 +54,17 @@ def create_llm_provider(config: LLMConfig) -> LLMProvider:
                 base_url=config.base_url or settings.OLLAMA_BASE_URL,
             )
 
+        case "llamaindex":
+            from app.infrastructure.llm.llamaindex_provider import LlamaIndexOllamaProvider
+            return LlamaIndexOllamaProvider(
+                model=config.model,
+                base_url=config.base_url or settings.OLLAMA_BASE_URL,
+            )
+
         case _:
             raise ConfigurationError(
                 f"Unknown LLM provider '{config.provider}'. "
-                "Supported: openai, claude, gemini, groq, openrouter, ollama."
+                "Supported: openai, claude, gemini, groq, openrouter, ollama, llamaindex."
             )
 
 
@@ -75,5 +82,6 @@ def _resolve_api_key(config: LLMConfig) -> str | None:
         "groq":        settings.GROQ_API_KEY,
         "openrouter":  settings.OPENROUTER_API_KEY,
         "ollama":      None,    # No key needed for local Ollama
+        "llamaindex":  None,    # No key needed — routes through Ollama locally
     }
     return env_map.get(config.provider)

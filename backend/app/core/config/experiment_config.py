@@ -8,7 +8,7 @@ from pydantic import BaseModel, Field, field_validator
 
 
 class LLMConfig(BaseModel):
-    provider: Literal["openai", "claude", "gemini", "groq", "ollama", "openrouter"] = "openai"
+    provider: Literal["openai", "claude", "gemini", "groq", "ollama", "openrouter", "llamaindex"] = "openai"
     model: str = "gpt-4o-mini"
     temperature: float = Field(default=0.7, ge=0.0, le=2.0)
     max_tokens: int = Field(default=2048, gt=0)
