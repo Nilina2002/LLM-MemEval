@@ -1,0 +1,41 @@
+{
+  "name": "Full Benchmark — Sliding Window, 500 turns",
+  "description": "Long-form benchmark run testing sliding window memory across 500 turns with all recall intervals.",
+  "llm": {
+    "provider": "openai",
+    "model": "gpt-4o-mini",
+    "temperature": 0.7,
+    "max_tokens": 1024,
+    "seed": 42
+  },
+  "conversation": {
+    "domain": "mixed",
+    "total_turns": 500,
+    "seed": 42
+  },
+  "facts": {
+    "count": 20,
+    "types": ["personal", "technical", "temporal", "spatial", "numerical"],
+    "injection_strategy": "uniform",
+    "difficulty_range": [0.2, 0.9],
+    "seed": 42
+  },
+  "memory": {
+    "strategy_name": "sliding_window",
+    "strategy_params": {
+      "window_size": 20
+    }
+  },
+  "recall": {
+    "intervals": [10, 50, 100, 250, 500],
+    "scoring_methods": ["fuzzy", "embedding", "llm_judge"],
+    "scoring_threshold": 0.8
+  },
+  "output": {
+    "output_dir": "results",
+    "export_json": true,
+    "export_csv": true,
+    "save_prompts": true,
+    "save_raw_responses": false
+  }
+}

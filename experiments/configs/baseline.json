@@ -1,0 +1,37 @@
+{
+  "name": "Baseline — No Memory, 100 turns",
+  "description": "Establishes lower bound: no memory context, 10 personal facts, recall at standard intervals.",
+  "llm": {
+    "provider": "openai",
+    "model": "gpt-4o-mini",
+    "temperature": 0.7,
+    "max_tokens": 512,
+    "seed": 42
+  },
+  "conversation": {
+    "domain": "casual",
+    "total_turns": 100,
+    "seed": 42
+  },
+  "facts": {
+    "count": 10,
+    "types": ["personal", "temporal", "spatial"],
+    "injection_strategy": "uniform",
+    "difficulty_range": [0.2, 0.6],
+    "seed": 42
+  },
+  "memory": {
+    "strategy_name": "no_memory",
+    "strategy_params": {}
+  },
+  "recall": {
+    "intervals": [10, 25, 50, 100],
+    "scoring_methods": ["fuzzy", "embedding"],
+    "scoring_threshold": 0.8
+  },
+  "output": {
+    "output_dir": "results",
+    "export_json": true,
+    "save_prompts": true
+  }
+}

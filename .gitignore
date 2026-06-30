@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+htmlcov/
+.coverage
+.mypy_cache/
+.ruff_cache/
+
+# Database
+*.db
+*.sqlite3
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Node
+node_modules/
+.next/
+out/
+npm-debug.log*
+
+# Results (large files — track configs not results)
+results/*/
+!results/.gitkeep
+
+# ChromaDB data
+chroma_data/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/settings.json
+.idea/
+*.swp
+
+# Alembic compiled
+backend/alembic/versions/*.pyc
