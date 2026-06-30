@@ -1,0 +1,122 @@
+[
+  {
+    "fact_id": "20b8903d-d72f-40d5-8144-1edfdcddad20",
+    "text": "My name is Amara.",
+    "expected_answer": "Amara",
+    "recall_question": "What is my name?",
+    "insertion_turn": 5,
+    "fact_type": "personal",
+    "difficulty": 0.37,
+    "importance": 0.61,
+    "tags": [],
+    "alternative_answers": []
+  },
+  {
+    "fact_id": "d322e094-9069-4375-8fcd-200e8efbea42",
+    "text": "My native language is Tamil.",
+    "expected_answer": "Tamil",
+    "recall_question": "What is my native language?",
+    "insertion_turn": 15,
+    "fact_type": "personal",
+    "difficulty": 0.55,
+    "importance": 0.52,
+    "tags": [],
+    "alternative_answers": []
+  },
+  {
+    "fact_id": "b8e409b2-514b-400d-9c52-022bf67a0967",
+    "text": "I own a Ford Focus.",
+    "expected_answer": "Ford Focus",
+    "recall_question": "What car do I own?",
+    "insertion_turn": 25,
+    "fact_type": "personal",
+    "difficulty": 0.5,
+    "importance": 0.51,
+    "tags": [],
+    "alternative_answers": []
+  },
+  {
+    "fact_id": "7ee7a9bd-7fd6-4278-9067-76c109eb0c6d",
+    "text": "The database is named memeval_db.",
+    "expected_answer": "memeval_db",
+    "recall_question": "What is the database name?",
+    "insertion_turn": 35,
+    "fact_type": "technical",
+    "difficulty": 0.55,
+    "importance": 0.9,
+    "tags": [],
+    "alternative_answers": []
+  },
+  {
+    "fact_id": "75cd2d80-2f67-4124-9c94-0b17a2cd4af1",
+    "text": "My favorite color is navy blue.",
+    "expected_answer": "navy blue",
+    "recall_question": "What is my favorite color?",
+    "insertion_turn": 45,
+    "fact_type": "personal",
+    "difficulty": 0.4,
+    "importance": 0.58,
+    "tags": [],
+    "alternative_answers": []
+  },
+  {
+    "fact_id": "74250e2e-bf18-422b-87d1-36f94d96fe13",
+    "text": "The server runs on port 8080.",
+    "expected_answer": "8080",
+    "recall_question": "What port does the server run on?",
+    "insertion_turn": 55,
+    "fact_type": "technical",
+    "difficulty": 0.43,
+    "importance": 0.68,
+    "tags": [],
+    "alternative_answers": []
+  },
+  {
+    "fact_id": "6f0fa5bd-dad1-4d2d-af06-ff682a7f3c81",
+    "text": "The codebase is written in French.",
+    "expected_answer": "French",
+    "recall_question": "What language is the codebase in?",
+    "insertion_turn": 65,
+    "fact_type": "technical",
+    "difficulty": 0.68,
+    "importance": 0.86,
+    "tags": [],
+    "alternative_answers": []
+  },
+  {
+    "fact_id": "cf87216e-acfd-42e4-9452-f633f4af923a",
+    "text": "I work as a software engineer.",
+    "expected_answer": "software engineer",
+    "recall_question": "What do I work as?",
+    "insertion_turn": 75,
+    "fact_type": "personal",
+    "difficulty": 0.53,
+    "importance": 0.91,
+    "tags": [],
+    "alternative_answers": []
+  },
+  {
+    "fact_id": "c2297d5a-5ee7-4886-8b7b-a1cf33e6d1f1",
+    "text": "I am 22 years old.",
+    "expected_answer": "22",
+    "recall_question": "How old am I?",
+    "insertion_turn": 85,
+    "fact_type": "personal",
+    "difficulty": 0.6,
+    "importance": 0.89,
+    "tags": [],
+    "alternative_answers": []
+  },
+  {
+    "fact_id": "dc1ff048-5cab-411a-bad9-5802d451467b",
+    "text": "The API base URL is http://localhost:8000.",
+    "expected_answer": "http://localhost:8000",
+    "recall_question": "What is the API base URL?",
+    "insertion_turn": 95,
+    "fact_type": "technical",
+    "difficulty": 0.3,
+    "importance": 0.68,
+    "tags": [],
+    "alternative_answers": []
+  }
+]
